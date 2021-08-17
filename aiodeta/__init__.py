@@ -1,7 +1,4 @@
-"""Unofficial Deta client"""
+from .client import Deta
 
 __version__ = "0.1.0"
-
-
-class Deta:
-    pass
+__all__ = (Deta.__name__,)
