@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aiodeta"
-version = "0.1.0"
+version = "0.1.2"
 description = "Unofficial Deta client"
 authors = ["leits <leits.dev@gmail.com>"]
 license = "MIT"

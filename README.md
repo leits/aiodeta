@@ -16,7 +16,7 @@ Unofficial client for Deta Clound
 
 ```python
 import asyncio
-import aiobotocore
+from aiodeta import Deta
 
 DETA_PROJECT_KEY = "xxx_yyy"
 
