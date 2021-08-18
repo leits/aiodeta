@@ -2,6 +2,7 @@
 
 [![Build](https://github.com/leits/aiodeta/actions/workflows/testing.yml/badge.svg?branch=main)](https://github.com/leits/aiodeta/actions/workflows/testing.yml)
 [![codecov](https://codecov.io/gh/leits/aiodeta/branch/main/graph/badge.svg?token=2W3AhfHpPT)](https://codecov.io/gh/leits/aiodeta)
+[![PyPI version](https://badge.fury.io/py/aiodeta.svg)](https://badge.fury.io/py/aiodeta)
 
 Unofficial client for Deta Clound
 
