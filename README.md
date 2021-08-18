@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/leits/aiodeta/branch/main/graph/badge.svg?token=2W3AhfHpPT)](https://codecov.io/gh/leits/aiodeta)
 [![PyPI version](https://badge.fury.io/py/aiodeta.svg)](https://badge.fury.io/py/aiodeta)
 
-Unofficial client for Deta Clound
+Unofficial client for [Deta Clound](https://deta.sh)
 
 ## Install
 
