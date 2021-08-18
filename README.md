@@ -6,6 +6,12 @@
 
 Unofficial client for Deta Clound
 
+## Install
+
+```shell
+pip install aiodeta
+```
+
 ## Supported functionality
 
 - [x] Deta Base
