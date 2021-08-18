@@ -5,11 +5,11 @@
 
 Unofficial client for Deta Clound
 
-## Supported functions
+## Supported functionality
 
-[x] Deta Base
-[] Deta Drive
-[] Decorator for cron tasks
+- [x] Deta Base
+- [ ] Deta Drive
+- [ ] Decorator for cron tasks
 
 ## Examples
 
