@@ -1,0 +1,32 @@
+name: Push
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python: [3.7, 3.8, 3.9]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Install poetry
+        run: |
+          pip install --upgrade pip
+          pip install poetry
+
+      - name: Install dependencies
+        shell: bash
+        run: poetry install
+
+      - name: Run Tox
+        # Run tox using the version of Python in `PATH`
+        run: poetry run tox -e py
