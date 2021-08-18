@@ -82,11 +82,8 @@ class _Base:
             return await resp.json()
 
     async def delete(self, key: str):
-        async with self._session.delete(f"{self._base_url}/items/{key}") as resp:
-            if resp.status == 200:
-                return
-            else:
-                return await resp.json()
+        async with self._session.delete(f"{self._base_url}/items/{key}"):
+            return
 
     async def query(self, query: list = None, limit: int = None, last: str = None):
         payload = {}
