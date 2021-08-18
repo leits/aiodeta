@@ -26,5 +26,6 @@ jobs:
           poetry install
 
       - name: Run Tox
-        # Run tox using the version of Python in `PATH`
+        env:
+          DETA_TEST_PROJECT_KEY: ${{ secrets.DETA_TEST_PROJECT_KEY }}
         run: poetry run tox -e py
