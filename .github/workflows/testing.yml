@@ -1,4 +1,4 @@
-name: Push
+name: Testing
 
 on: [push, pull_request]
 
@@ -25,7 +25,9 @@ jobs:
           python3 -m pip install poetry
           python3 -m poetry install
 
-      - name: Run Tox
+      - name: Run tests
         env:
           DETA_TEST_PROJECT_KEY: ${{ secrets.DETA_TEST_PROJECT_KEY }}
         run: python3 -m poetry run pytest --cov=aiodeta --cov-report term-missing
+
+      - uses: codecov/codecov-action@v2
