@@ -1,0 +1,31 @@
+name: Push
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ${{matrix.platform}}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+        python: [3.7, 3.8, 3.9]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install poetry
+          python3 -m poetry install
+
+      - name: Run Tox
+        env:
+          DETA_TEST_PROJECT_KEY: ${{ secrets.DETA_TEST_PROJECT_KEY }}
+        run: python3 -m poetry run pytest --cov=aiodeta --cov-report term-missing
