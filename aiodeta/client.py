@@ -34,10 +34,7 @@ class _Base:
         self._session = session
         self._base_url = base_url
 
-    async def insert(self, data: dict, key: str = None):
-        if key:
-            data["key"] = key
-
+    async def insert(self, data: dict):
         async with self._session.post(
             f"{self._base_url}/items", json={"item": data}
         ) as resp:
