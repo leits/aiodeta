@@ -1,29 +1,8 @@
-import os
-import uuid
+from uuid import uuid4
 
 import pytest
 
-from aiodeta import Deta
-
-try:
-    from dotenv import load_dotenv
-
-    load_dotenv()
-except:
-    pass
-
-
-PROJECT_KEY = os.getenv("DETA_TEST_PROJECT_KEY", "")
-BASE_NAME = os.getenv("DETA_TEST_BASE_NAME", "test")
-
 pytestmark = pytest.mark.asyncio
-
-
-@pytest.fixture()
-async def base():
-    deta = Deta(PROJECT_KEY)
-    yield deta.Base(BASE_NAME)
-    await deta.close()
 
 
 @pytest.fixture
@@ -43,6 +22,7 @@ async def item(make_items):
             "profile": {"age": 32, "active": False, "hometown": "pittsburgh"},
             "on_mobile": False,
             "likes": ["anime"],
+            "hobbies": [],
             "purchases": 1,
         }
     ]
@@ -50,11 +30,17 @@ async def item(make_items):
     yield items[0]
 
 
-async def test_insert(base):
+async def test_insert_without_key(base):
     payload = {"value": "row"}
     result = await base.insert(payload)
     assert "key" in result
     result.pop("key")
+    assert result == payload
+
+
+async def test_insert_with_key(base):
+    payload = {"value": "row", "key": uuid4().hex}
+    result = await base.insert(payload)
     assert result == payload
 
 
@@ -67,6 +53,13 @@ async def test_put(base):
         assert "key" in row
         row.pop("key")
     assert processed_items == payload
+
+
+async def test_put_26_items(base):
+    payload = [{"value": "row"} for _ in range(26)]
+
+    with pytest.raises(ValueError, match="We can't put more than 25 items at a time."):
+        await base.put(payload)
 
 
 async def test_get(base, item):
@@ -88,6 +81,7 @@ async def test_update(base, item):
         },
         "increment": {"purchases": 2},
         "append": {"likes": ["ramen"]},
+        "prepend": {"hobbies": ["racing"]},
         "delete": ["profile.hometown", "on_mobile"],
     }
 
@@ -97,8 +91,13 @@ async def test_update(base, item):
     assert result == payload
 
 
+async def test_update_no_actions(base, item):
+    with pytest.raises(ValueError, match="Provide at least one update action."):
+        await base.update(item["key"])
+
+
 async def test_query(base, make_items):
-    test_id = uuid.uuid4().hex
+    test_id = uuid4().hex
     data = [
         {
             "username": "jimmy",
