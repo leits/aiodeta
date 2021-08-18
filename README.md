@@ -4,7 +4,7 @@ Unofficial client for Deta Clound
 
 ## Examples
 
-```
+```python
 import asyncio
 import aiobotocore
 
